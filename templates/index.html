@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Reference Converter</h1>
+        <form action="/convert" method="POST" enctype="multipart/form-data" class="p-4 border rounded shadow-sm bg-light">
+            <div class="mb-3">
+                <label for="reference_file" class="form-label">Upload your reference file:</label>
+                <input type="file" id="reference_file" name="reference_file" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="input_format" class="form-label">Select input format:</label>
+                <select id="input_format" name="input_format" class="form-select">
+                    <option value="bibtex">BibTeX</option>
+                    <option value="ris">RIS</option>
+                    <option value="json">JSON</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Convert</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
