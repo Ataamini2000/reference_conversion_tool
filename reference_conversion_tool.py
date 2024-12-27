@@ -1,7 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
 import json
-import yaml
 
 def read_references(input_path, input_format):
     """Reads references from different formats."""
@@ -15,9 +14,6 @@ def read_references(input_path, input_format):
     elif input_format == "ris":
         with open(input_path, "r", encoding="utf-8") as file:
             references = parse_ris(file.read())
-    elif input_format == "yaml":
-        with open(input_path, "r", encoding="utf-8") as file:
-            references = parse_yaml(file.read())
     else:
         raise ValueError("Unsupported format: " + input_format)
     return references
@@ -55,11 +51,6 @@ def parse_ris(content):
             reference[key] = value
     if reference:  # Add the last reference
         references.append(reference)
-    return references
-
-def parse_yaml(content):
-    """Parse YAML content to a reference list."""
-    references = yaml.safe_load(content)
     return references
 
 def convert_to_endnote_format(references):
