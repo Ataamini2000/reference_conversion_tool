@@ -41,15 +41,15 @@ def parse_ris(content):
     reference = {}
     for line in lines:
         if line.startswith("TY"):  # Start of a new reference
-            if reference:
+            if reference:  # Add the previous reference before starting a new one
                 references.append(reference)
-                reference = {}
+            reference = {}
         if " - " in line:
             key, value = line.split(" - ", 1)
             key = key.strip().lower()
             value = value.strip()
             reference[key] = value
-    if reference:  # Add the last reference
+    if reference:  # Add the last reference if present
         references.append(reference)
     return references
 
@@ -64,7 +64,10 @@ def convert_to_endnote_format(references):
             field = ET.SubElement(record, key)
             field.text = value
 
-    return ET.tostring(root, encoding="utf-8", method="xml").decode("utf-8")
+    # Adding XML declaration for better handling of encoding
+    xml_content = ET.tostring(root, encoding="utf-8", method="xml").decode("utf-8")
+    xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    return xml_declaration + xml_content
 
 def write_endnote_file(output_path, xml_content):
     """Writes the EndNote XML content to a file."""
@@ -73,7 +76,7 @@ def write_endnote_file(output_path, xml_content):
 
 def main():
     input_path = input("Enter the path of the reference file: ")
-    input_format = input("Enter the input format (bibtex/json/ris/yaml): ").lower()
+    input_format = input("Enter the input format (bibtex/json/ris): ").lower()
     output_path = input("Enter the output path for the EndNote file: ")
 
     if not os.path.exists(input_path):
